@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytoolkit"
-version = "0.0.2"
+version = "0.0.3"
 description = ""
 authors = ["wangqs <wqs1639@gmail.com>"]
 
@@ -20,7 +20,10 @@ default = true
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
-typer = {version = "^0.6.1", extras = ["all"]}
+typer = [
+    {version = "^0.6.0", python = ">=3.7", extras = ["all"]},
+    {version = "^0.5.0", python = ">=3.6, <3.7", extras = ["all"]},
+]
 
 [tool.poetry.dev-dependencies]
 pre-commit = [
