@@ -1,6 +1,6 @@
 import typer
 
-from pytoolkit import __version__
+from pytoolkit import __version__, __package__
 
 
 def version_callback(value: bool):
