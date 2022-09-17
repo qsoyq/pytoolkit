@@ -101,6 +101,8 @@ def delete(
                                      '-y',
                                      '--yes',
                                      help='Skip the confirmation prompt'),
+    delete_tag: bool = typer.Option(True,
+                                    '--delete-tag'),
 ):
     """Delete a release."""
     cmd = "gh release delete"
@@ -140,6 +142,8 @@ def delete(
         raise typer.Exit(p.returncode)
 
     typer.echo(p.stdout)
+    if not delete_tag:
+        return
 
     cmd = f'git tag -d {tag}'
     p = subprocess.run(shlex.split(cmd), capture_output=True, text=True)
