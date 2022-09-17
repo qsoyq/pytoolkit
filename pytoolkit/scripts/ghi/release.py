@@ -104,7 +104,6 @@ def delete(
 ):
     """Delete a release."""
     cmd = "gh release delete"
-
     if tag is None:
         config_path = Path("pyproject.toml")
         if not config_path.exists():
@@ -139,8 +138,17 @@ def delete(
     if p.returncode != 0:
         typer.echo(p.stderr, err=True, color=True)
         raise typer.Exit(p.returncode)
-    # TODO: delete tag
+
     typer.echo(p.stdout)
+
+    cmd = f'git tag -d {tag}'
+    p = subprocess.run(shlex.split(cmd), capture_output=True, text=True)
+
+    cmd = f'git push origin :refs/tags/{tag}'
+    p = subprocess.run(shlex.split(cmd), capture_output=True, text=True)
+    if p.returncode != 0:
+        typer.echo(p.stderr, err=True, color=True)
+        raise typer.Exit(p.returncode)
 
 
 def main():

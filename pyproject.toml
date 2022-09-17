@@ -12,6 +12,7 @@ generate-setup-file = false
 [tool.poetry.scripts]
 snowflake = "pytoolkit.scripts.snowflake:main"
 urandom = "pytoolkit.scripts.urandom:main"
+ghi = "pytoolkit.scripts.ghi.main:main"
 
 [[tool.poetry.source]]
 name = "aliyun"
