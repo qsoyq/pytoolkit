@@ -1,4 +1,3 @@
-import logging
 import shlex
 import subprocess
 
@@ -9,8 +8,6 @@ import toml
 import typer
 
 cmd = typer.Typer(help='A Wrapper for github cli release command.')
-
-logger = logging.getLogger()
 
 
 @cmd.command()
@@ -57,15 +54,15 @@ def create(
     if tag is None:
         config_path = Path("pyproject.toml")
         if not config_path.exists():
-            logger.warning("pyproject.yaml is not exists.")
+            typer.echo("pyproject.yaml is not exists.")
             raise typer.Exit(1)
 
         document = toml.load(config_path)
-        logger.debug(f"document: {document}")
+        typer.echo(f"document: {document}")
         try:
             version = document["tool"]["poetry"]["version"]
         except KeyError:
-            logger.warning("version is not found in pyproject.toml")
+            typer.echo("version is not found in pyproject.toml")
             raise typer.Exit(1)
 
         if not isinstance(version, str):
@@ -109,15 +106,15 @@ def delete(
     if tag is None:
         config_path = Path("pyproject.toml")
         if not config_path.exists():
-            logger.warning("pyproject.yaml is not exists.")
+            typer.echo("pyproject.yaml is not exists.")
             raise typer.Exit(1)
 
         document = toml.load(config_path)
-        logger.debug(f"document: {document}")
+        typer.echo(f"document: {document}")
         try:
             version = document["tool"]["poetry"]["version"]
         except KeyError:
-            logger.warning("version is not found in pyproject.toml")
+            typer.echo("version is not found in pyproject.toml")
             raise typer.Exit(1)
 
         if not isinstance(version, str):

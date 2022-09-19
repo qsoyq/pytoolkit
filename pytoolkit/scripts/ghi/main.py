@@ -19,8 +19,6 @@ https://cli.github.com/
 cmd = typer.Typer(help=helptext)
 cmd.add_typer(pytoolkit.scripts.ghi.release.cmd, name='release')
 
-logger = logging.getLogger()
-
 
 @cmd.callback(invoke_without_command=True)
 def default(
@@ -37,7 +35,7 @@ def default(
 ):
     logging.basicConfig(level=log_level, format=log_format)
     if not is_cmd_exists('gh'):
-        logger.error(error("gh not found"))
+        typer.echo(error("gh not found"))
         raise typer.Exit(-1)
 
 
