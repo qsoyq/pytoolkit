@@ -12,6 +12,7 @@ generate-setup-file = false
 [tool.poetry.scripts]
 snowflake = "pytoolkit.scripts.snowflake:main"
 urandom = "pytoolkit.scripts.urandom:main"
+ghi = "pytoolkit.scripts.ghi.main:main"
 
 [[tool.poetry.source]]
 name = "aliyun"
@@ -24,6 +25,9 @@ typer = [
     {version = ">=0.6.0", python = ">=3.7", extras = ["all"]},
     {version = ">=0.5.0, <0.6.0", python = ">=3.6.2, <3.7", extras = ["all"]},
 ]
+
+toml = "^0.10.2"
+types-toml = "^0.10.8"
 
 [tool.poetry.dev-dependencies]
 pre-commit = [
