@@ -58,7 +58,6 @@ def create(
             raise typer.Exit(1)
 
         document = toml.load(config_path)
-        typer.echo(f"document: {document}")
         try:
             version = document["tool"]["poetry"]["version"]
         except KeyError:
@@ -110,7 +109,6 @@ def delete(
             raise typer.Exit(1)
 
         document = toml.load(config_path)
-        typer.echo(f"document: {document}")
         try:
             version = document["tool"]["poetry"]["version"]
         except KeyError:
