@@ -43,6 +43,7 @@ tox-poetry = "^0.4.1"
 pytest = "^7.0"
 pytest-asyncio = "^0.16.0"
 types-toml = "^0.10.8"
+pretty-errors = "^1.2.25"
 
 
 [build-system]
