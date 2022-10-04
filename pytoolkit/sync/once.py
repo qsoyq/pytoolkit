@@ -3,12 +3,12 @@ import inspect
 import threading
 
 from functools import wraps
-from typing import Callable
+from typing import Callable, Union
 
 
 def once(func: Callable):
     done = 0
-
+    _lock: Union[threading.Lock, asyncio.locks.Lock]
     if not callable(func):
         raise TypeError("func must be callable")
 
