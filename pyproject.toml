@@ -23,7 +23,13 @@ default = true
 python = "^3.6.2"
 typer = "^0.5"
 toml = "^0.10.2"
-rich = "^12"
+rich = [
+    { version = "12.0.1", python = "<=3.6.2, >=3.6"},
+    { version = "^12.6", python = ">=3.6.3"}
+]
+typing-extensions = "^4.1"
+fastapi = "^0.83"
+httpx = "^0.22"
 
 
 [tool.poetry.dev-dependencies]
@@ -53,17 +59,19 @@ build-backend = "poetry.core.masonry.api"
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py310, py39, py38, py37
+envlist = py310, py39, py38, py37, py36
 isolated_build = true
 
 [testenv]
 setenv =
     PYTHONPATH = .
+
 deps =
     poetry
     pytest
 
 commands =
+    python -m poetry install
     pytest tests
 """
 
