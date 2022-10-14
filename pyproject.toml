@@ -13,6 +13,7 @@ generate-setup-file = false
 snowflake = "pytoolkit.scripts.snowflake:main"
 urandom = "pytoolkit.scripts.urandom:main"
 ghi = "pytoolkit.scripts.ghi.main:main"
+helloserver = "pytoolkit.scripts.helloserver:main"
 
 [[tool.poetry.source]]
 name = "aliyun"
@@ -30,6 +31,7 @@ rich = [
 typing-extensions = "^4.1"
 fastapi = "^0.83"
 httpx = "^0.22"
+uvicorn = "^0.16"
 
 
 [tool.poetry.dev-dependencies]
@@ -126,6 +128,7 @@ exclude = ['^venv/', '^__init__\.py$']
 [[tool.mypy.overrides]]
 module = [
     "pretty_errors",
+    "uvicorn",
 ]
 ignore_missing_imports = true
 
