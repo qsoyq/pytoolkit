@@ -1,10 +1,7 @@
 .PHONY: default format mypy build push test tox
 
 
-IMAGE_NAME := pytoolkit
-PROJECT_NAME := pytoolkit
-
-default: build push
+default: format
 
 format: refactor pre-commit
 
@@ -18,13 +15,6 @@ pre-commit:
 
 mypy:
 	@mypy .
-
-build:
-	docker build --platform linux/amd64 -t $(IMAGE_NAME) .
-
-push:
-	docker push $(IMAGE_NAME)
-	if [ -n ${BARK_TOKEN} ]; then curl https://api.day.app/$(BARK_TOKEN)/$(PROJECT_NAME)%20push%20success; fi;
 
 tox:
 	docker volume create pytoolkit-tox-testenv
