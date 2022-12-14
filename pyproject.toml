@@ -14,6 +14,7 @@ snowflake = "pytoolkit.scripts.snowflake:main"
 urandom = "pytoolkit.scripts.urandom:main"
 ghi = "pytoolkit.scripts.ghi.main:main"
 helloserver = "pytoolkit.scripts.helloserver:main"
+lc-chatbot = "pytoolkit.cli.lc_chatbot:main"
 
 [[tool.poetry.source]]
 name = "aliyun"
