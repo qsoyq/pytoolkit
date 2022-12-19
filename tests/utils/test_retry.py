@@ -48,7 +48,7 @@ def test_retry_with_max_tries():
 
 def test_retry_with_exceptions():
 
-    exceptions = (TypeError, ValueError)
+    exceptions = (TypeError, IndexError)
 
     def add_one():
         nonlocal num
@@ -57,25 +57,26 @@ def test_retry_with_exceptions():
     num = 0
     max_tries = 3
 
-    @retry(max_tries=max_tries)
+    @retry(max_tries=max_tries, exceptions=exceptions)
     def always_error(cb: Callable, exception=BaseException) -> None:
         cb()
+        print(exception)
         raise exception()
 
     try:
+        num = 0
         always_error(add_one, TypeError)
     except exceptions:
         assert num == max_tries
-        num = 0
 
     try:
+        num = 0
         always_error(add_one, IndexError)
     except exceptions:
         assert num == max_tries
-        num = 0
 
     try:
+        num = 0
         always_error(add_one, LookupError)
     except LookupError:
         assert num == 1
-        num = 0
