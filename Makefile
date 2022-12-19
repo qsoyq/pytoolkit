@@ -1,16 +1,17 @@
-.PHONY: default format mypy build push test tox
+.PHONY: default format mypy build push test tox precommit
 
 
 default: format
 
-format: refactor pre-commit
+format: refactor precommit
 
 refactor:
 	@yapf -r -i . 
 	@isort . 
 	@pycln -a .
 
-pre-commit:
+precommit:
+	@pre-commit install
 	@pre-commit run --all-file
 
 mypy:
