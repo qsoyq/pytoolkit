@@ -4,7 +4,7 @@ version = "0.0.7"
 description = ""
 authors = ["wangqs <wqs1639@gmail.com>"]
 
-repository = "repository"
+repository = "https://github.com/qsoyq/pytoolkit"
 
 [tool.poetry.build]
 generate-setup-file = false
@@ -15,11 +15,12 @@ urandom = "pytoolkit.scripts.urandom:main"
 ghi = "pytoolkit.scripts.ghi.main:main"
 helloserver = "pytoolkit.scripts.helloserver:main"
 lc-chatbot = "pytoolkit.cli.lc_chatbot:main"
+openapi_download = "pytoolkit.scripts.openapi_downloader:main"
 
 [[tool.poetry.source]]
 name = "aliyun"
 url = "https://mirrors.aliyun.com/pypi/simple/"
-default = true
+priority = "default"
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
@@ -31,8 +32,8 @@ rich = [
 ]
 typing-extensions = "^4.1"
 fastapi = "^0.83"
-httpx = "^0.22"
 uvicorn = "^0.16"
+httpx = {version = "0.22.0", extras = ["socks"]}
 
 
 [tool.poetry.dev-dependencies]
