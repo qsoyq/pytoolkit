@@ -30,7 +30,7 @@ repos:
 
 
 -   repo: https://github.com/pycqa/isort
-    rev: 5.10.1
+    rev: 5.12.0
     hooks:
       - id: isort
         files: "\\.(py)$"
@@ -38,7 +38,7 @@ repos:
 
 
 -   repo: https://github.com/hadialqattan/pycln
-    rev: v1.1.0 # Possible releases: https://github.com/hadialqattan/pycln/releases
+    rev: v2.4.0 # Possible releases: https://github.com/hadialqattan/pycln/releases
     hooks:
       - id: pycln
         args: [--config=pyproject.toml]
