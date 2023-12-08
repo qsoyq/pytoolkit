@@ -17,10 +17,6 @@ helloserver = "pytoolkit.scripts.helloserver:main"
 lc-chatbot = "pytoolkit.cli.lc_chatbot:main"
 openapi_download = "pytoolkit.scripts.openapi_downloader:main"
 
-[[tool.poetry.source]]
-name = "aliyun"
-url = "https://mirrors.aliyun.com/pypi/simple/"
-priority = "default"
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
@@ -75,6 +71,19 @@ deps =
     pytest
 
 commands =
+    python -m poetry install
+    pytest tests
+
+[testenv:py36]
+setenv =
+    PYTHONPATH = .
+
+deps =
+    poetry
+    pytest
+
+commands =
+    rm -f poetry.lock
     python -m poetry install
     pytest tests
 """
