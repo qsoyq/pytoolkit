@@ -30,7 +30,7 @@ rich = [
 typing-extensions = "^4.1"
 fastapi = "^0.83"
 uvicorn = "^0.16"
-httpx = {version = "0.22.0", extras = ["socks"]}
+httpx = {version = "^0.22", extras = ["socks"]}
 
 
 [tool.poetry.dev-dependencies]
