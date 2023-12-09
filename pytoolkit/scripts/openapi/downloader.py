@@ -10,7 +10,7 @@ import typer
 from pytoolkit.scripts import version_callback
 
 cmd = typer.Typer()
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 @cmd.command()

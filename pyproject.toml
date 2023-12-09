@@ -15,7 +15,8 @@ urandom = "pytoolkit.scripts.urandom:main"
 ghi = "pytoolkit.scripts.ghi.main:main"
 helloserver = "pytoolkit.scripts.helloserver:main"
 lc-chatbot = "pytoolkit.cli.lc_chatbot:main"
-openapi_download = "pytoolkit.scripts.openapi_downloader:main"
+openapi_download = "pytoolkit.scripts.openapi.downloader:main"
+openapi_aggerator = "pytoolkit.scripts.openapi.aggregator:main"
 
 
 [tool.poetry.dependencies]
