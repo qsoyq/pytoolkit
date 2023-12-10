@@ -7,7 +7,7 @@ authors = ["wangqs <wqs1639@gmail.com>"]
 repository = "https://github.com/qsoyq/pytoolkit"
 
 [tool.poetry.build]
-generate-setup-file = false
+generate-setup-file = true
 
 [tool.poetry.scripts]
 snowflake = "pytoolkit.scripts.snowflake:main"
@@ -20,38 +20,40 @@ openapi_aggerator = "pytoolkit.scripts.openapi.aggregator:main"
 
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
-typer = "^0.5"
-toml = "^0.10.2"
+python = ">=3.6.2 <4.0"
+typer = ">=0.5"
+toml = ">=0.10.2"
 rich = [
     { version = "12.0.1", python = "<=3.6.2, >=3.6"},
-    { version = "^12.6", python = ">=3.6.3"}
+    { version = ">=12.6", python = ">=3.6.3"}
 ]
-typing-extensions = "^4.1"
-fastapi = "^0.83"
-uvicorn = "^0.16"
-httpx = {version = "^0.22", extras = ["socks"]}
+typing-extensions = ">=4.1"
+fastapi = ">=0.83"
+uvicorn = ">=0.16"
+httpx = {version = ">=0.22", extras = ["socks"]}
 
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.1"
-pycln = "^2"
-yapf = "^0.32.0"
+pre-commit = ">=2.1"
+pycln = [
+    { version = ">=2.4.0", python = ">=3.7"},
+    { version = "<2.4.0", python = "<3.7"},
+]
+yapf = ">=0.32.0"
 
-isort = "^5.8"
-mypy = "^0.971"
+isort = ">=5.8"
+mypy = ">=0.971"
 ipython = [
-    { version = "^8.4", python = ">=3.8" },
-    { version = "^7.16", python = ">=3.6, <3.8" },
+    { version = ">=8.4", python = ">=3.8" },
+    { version = ">=7.16", python = ">=3.6, <3.8" },
 ]
 
-tox = "^3.25.1"
-tox-poetry = "^0.4.1"
-pytest = "^7.0"
-pytest-asyncio = "^0.16.0"
-types-toml = "^0.10.8"
-pretty-errors = "^1.2.25"
-
+tox = ">=3.25.1"
+tox-poetry = ">=0.4.1"
+pytest = ">=7.0"
+pytest-asyncio = ">=0.16.0"
+types-toml = ">=0.10.8"
+pretty-errors = ">=1.2.25"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -60,7 +62,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py310, py39, py38, py37, py36
+envlist = py310, py39, py38, py37, py3.6.2
 isolated_build = true
 
 [testenv]
@@ -73,9 +75,10 @@ deps =
 
 commands =
     python -m poetry install
-    pytest tests
+    python -m pip install pytest
+    python -m pytest tests
 
-[testenv:py36]
+[testenv:py3.6.2]
 setenv =
     PYTHONPATH = .
 
@@ -83,12 +86,13 @@ deps =
     poetry
     pytest
 
+allowlist_externals = py3.6.2
 commands =
-    rm -f poetry.lock
-    python -m poetry install
-    pytest tests
+    py3.6.2 -m pip install --upgrade pip
+    py3.6.2 -m pip install pytest pytest-asyncio>=0.16.0
+    py3.6.2 -m pip install -r requirements.txt
+    py3.6.2 -m pytest tests
 """
-
 
 [tool.isort]
 # https://pycqa.github.io/isort/docs/configuration/options.html
