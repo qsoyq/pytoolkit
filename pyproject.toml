@@ -14,7 +14,7 @@ snowflake = "pytoolkit.scripts.snowflake:main"
 urandom = "pytoolkit.scripts.urandom:main"
 ghi = "pytoolkit.scripts.ghi.main:main"
 helloserver = "pytoolkit.scripts.helloserver:main"
-lc-chatbot = "pytoolkit.cli.lc_chatbot:main"
+lc-chatbot = "pytoolkit.scripts.laiye.lc_chatbot:main"
 openapi_download = "pytoolkit.scripts.openapi.downloader:main"
 openapi_aggerator = "pytoolkit.scripts.openapi.aggregator:main"
 

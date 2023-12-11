@@ -2,10 +2,12 @@ import hashlib
 import time
 import uuid
 
-from typing import Mapping
+from typing import Mapping, Optional
 
 import httpx
 import typer
+
+from pytoolkit.scripts import version_callback
 
 cmd = typer.Typer()
 
@@ -28,12 +30,17 @@ def get_headers(pubkey: str, secret: str) -> Mapping[str, str]:
 
 @cmd.command()
 def bot_response(
+    version_callback: Optional[bool] = typer.Option(None,
+                                                    "--version",
+                                                    "-V",
+                                                    callback=version_callback),
     debug: bool = typer.Option(False),
     scheme: str = typer.Option("https"),
     endpoint: str = typer.Option("demo.laiye.com:8083"),
     _type: str = typer.Option("channels"),
     action: str = typer.Option("getReply"),
     version: str = typer.Option("v1alpha1",
+                                "--api-version",
                                 help='API 版本号'),
     username: str = typer.Option("pytoolkit",
                                  prompt=True,
