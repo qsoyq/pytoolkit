@@ -17,6 +17,7 @@ helloserver = "pytoolkit.scripts.helloserver:main"
 lc-chatbot = "pytoolkit.scripts.laiye.lc_chatbot:main"
 openapi_download = "pytoolkit.scripts.openapi.downloader:main"
 openapi_aggerator = "pytoolkit.scripts.openapi.aggregator:main"
+obsidian_image_download = "pytoolkit.scripts.obsidian.image_download:main"
 
 
 [tool.poetry.dependencies]

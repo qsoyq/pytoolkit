@@ -1,10 +1,14 @@
 import logging
 
+from typing import Optional
+
 import typer
 import uvicorn
 
 from fastapi import FastAPI
 from fastapi.responses import PlainTextResponse
+
+from pytoolkit.scripts import version_callback
 
 cmd = typer.Typer()
 app = FastAPI()
@@ -34,6 +38,10 @@ def http(
     log_level: int = typer.Option(logging.DEBUG,
                                   '--log_level',
                                   envvar='log_level'),
+    version: Optional[bool] = typer.Option(None,
+                                           "--version",
+                                           "-V",
+                                           callback=version_callback),
     name: str = typer.Option("",
                              '--name'),
 ):
