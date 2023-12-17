@@ -1,5 +1,6 @@
 import logging
 import re
+import warnings
 
 from concurrent.futures import Future, ThreadPoolExecutor
 from pathlib import Path
@@ -42,6 +43,7 @@ def run(
                                 help="dir path"),
 ):
     """Download images resource from markdown files."""
+    warnings.warn("This command is about to be removed, please use openapi_assets_download.")
     logging.basicConfig(level=log_level, format=log_format)
     if not path.exists() or not path.is_dir():
         error_echo("Directory does not exist")
