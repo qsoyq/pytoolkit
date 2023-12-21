@@ -92,7 +92,7 @@ def http(
     logging.basicConfig(level=log_level)
     logging.info(f"http server listening on {host}:{port}")
     module = 'pytoolkit.scripts.helloserver'
-    uvicorn.run(f"{module}:app", host=host, port=port, debug=debug, reload=reload)
+    uvicorn.run(f"{module}:app", host=host, port=port, reload=reload)
 
 
 def main():
