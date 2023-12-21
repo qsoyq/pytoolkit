@@ -18,6 +18,7 @@ lc-chatbot = "pytoolkit.scripts.laiye.lc_chatbot:main"
 openapi_download = "pytoolkit.scripts.openapi.downloader:main"
 openapi_aggerator = "pytoolkit.scripts.openapi.aggregator:main"
 obsidian_image_download = "pytoolkit.scripts.obsidian.image_download:main"
+obsidian_assets_download = "pytoolkit.scripts.obsidian.assets_download:main"
 
 
 [tool.poetry.dependencies]

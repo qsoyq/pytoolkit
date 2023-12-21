@@ -1,6 +1,5 @@
 import logging
 import re
-import warnings
 
 from concurrent.futures import Future, ThreadPoolExecutor
 from pathlib import Path
@@ -28,23 +27,24 @@ def run(
                                            "--version",
                                            "-V",
                                            callback=version_callback),
-    image_format: list[str] = typer.Option(['jpeg',
-                                            'jpg',
-                                            'png'],
-                                           help="支持的图片格式"),
-    image_host: str = typer.Option("telegraph.19940731.xyz",
-                                   '--image-host',
-                                   help="图片链接主机名"),
-    output: Path = typer.Option(Path("./dist/obsidian/images/"),
+    assets_format: list[str] = typer.Option(['jpeg',
+                                             'jpg',
+                                             'png',
+                                             'mp4'],
+                                            help="支持的资源格式"),
+    assets_host: str = typer.Option("telegraph.19940731.xyz",
+                                    '--host',
+                                    help="host address"),
+    output: Path = typer.Option(Path("./dist/obsidian/assets/"),
                                 "--output",
                                 '-o',
-                                help="图片资源保存路径"),
+                                help="资源保存路径"),
+    force_write_if_exists: bool = typer.Option(False,
+                                               help="当待下载的文件已经出现在本地目录时是否强制下载覆盖"),
     path: Path = typer.Argument(Path("."),
                                 help="dir path"),
 ):
-    """Download images resource from markdown files."""
-    warnings.warn("This command is about to be removed, please use openapi_assets_download.")
-    # todo: removed after v0.2.0
+    """Download assets resource from markdown files."""
     logging.basicConfig(level=log_level, format=log_format)
     if not path.exists() or not path.is_dir():
         error_echo("Directory does not exist")
@@ -55,9 +55,9 @@ def run(
 
     paths = iter_path(path)
 
-    format_str = "|".join(image_format)
+    format_str = "|".join(assets_format)
     format_pattern = f"({format_str})"
-    pattern = re.compile(rf"(https?://{image_host}/file/\w+.{format_pattern})")
+    pattern = re.compile(rf"(https?://{assets_host}/file/\w+.{format_pattern})")
 
     urls: list[str] = []
     for path in paths:
@@ -67,6 +67,8 @@ def run(
         futures: list[Future] = []
         for url in urls:
             write_file_path = output / url.rsplit('/', 1)[-1]
+            if write_file_path.exists() and force_write_if_exists is False:
+                continue
             future = executor.submit(download_image, url, write_file_path)
             futures.append(future)
         for future in futures:
