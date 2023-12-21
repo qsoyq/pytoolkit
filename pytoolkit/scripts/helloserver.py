@@ -1,22 +1,61 @@
+import json
 import logging
 
 from typing import Optional
+from urllib.parse import urlparse, urlunparse
 
 import typer
 import uvicorn
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import PlainTextResponse
+from pydantic import BaseSettings
 
 from pytoolkit.scripts import version_callback
 
 cmd = typer.Typer()
 app = FastAPI()
+logger = logging.getLogger(__name__)
+
+
+class Settings(BaseSettings):
+    scheme: str = "https"
+    host: str = "chatai.tsingtao.com.cn"
+    port: str = "443"
+
+
+def replace_host_and_port(url):
+    s = Settings()
+    parsed_url = urlparse(url)
+    replaced_url = parsed_url._replace(netloc=f"{s.host}:{s.port}", scheme=s.scheme)
+    new_url = urlunparse(replaced_url)
+    return new_url
 
 
 @app.get('/')
 def index():
     return PlainTextResponse("success")
+
+
+@app.post('/message-route')
+async def message_route(req: Request):
+    body = await req.body()
+    bot_message = json.loads(body.decode())
+    responses = bot_message['responses']
+    for response in responses:
+        # if 'text' in response['msgBody']:
+        #     response['msgBody']['text']['content'] = f"{response['msgBody']['text']['content']}_"
+        if 'image' in response['msgBody']:
+            response['msgBody']['image']['resourceUrl'] = replace_host_and_port(
+                response['msgBody']['image']['resourceUrl']
+            )
+            logger.debug(f"new image: {response['msgBody']['image']['resourceUrl']}")
+        if 'video' in response['msgBody']:
+            response['msgBody']['video']['resourceUrl'] = replace_host_and_port(
+                response['msgBody']['video']['resourceUrl']
+            )
+            logger.debug(f"new video: {response['msgBody']['video']['resourceUrl']}")
+    return bot_message
 
 
 @cmd.command()
