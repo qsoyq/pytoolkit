@@ -9,7 +9,11 @@ import uvicorn
 
 from fastapi import FastAPI, Request
 from fastapi.responses import PlainTextResponse
-from pydantic import BaseSettings
+
+try:
+    from pydantic import BaseSettings
+except ImportError:
+    from pydantic_settings import BaseSettings
 
 from pytoolkit.scripts import version_callback
 
@@ -18,7 +22,7 @@ app = FastAPI()
 logger = logging.getLogger(__name__)
 
 
-class Settings(BaseSettings):
+class Settings(BaseSettings):  # type: ignore
     scheme: str = "https"
     host: str = "chatai.tsingtao.com.cn"
     port: str = "443"

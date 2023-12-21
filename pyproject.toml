@@ -22,18 +22,27 @@ obsidian_assets_download = "pytoolkit.scripts.obsidian.assets_download:main"
 
 
 [tool.poetry.dependencies]
-python = ">=3.6.2 <4.0"
+python = ">=3.8.0 <4.0"
 typer = ">=0.5"
 toml = ">=0.10.2"
 rich = [
-    { version = "12.0.1", python = "<=3.6.2, >=3.6"},
+    { version = "<=12.0.1", python = "<=3.6.2, >=3.6"},
     { version = ">=12.6", python = ">=3.6.3"}
 ]
-typing-extensions = ">=4.1"
-fastapi = ">=0.83"
+typing-extensions = [
+    { version=">=4.1", python = ">=3.7.0"}
+]
+fastapi = [
+    { version ="<=0.83", python = ">=3.6.2, <3.7"},
+    { version =">=0.84", python = ">=3.8.0"}
+]
 uvicorn = ">=0.16"
 httpx = {version = ">=0.22", extras = ["socks"]}
-
+pydantic = [
+    { version = ">=1.9.2 <2.0.0", python = ">=3.6.2 <3.7" },
+    { version = ">=2.0b3", python = ">=3.7.0" }
+]
+pydantic-settings = { version = ">=2.0.0", python = ">=3.7.0", markers = "python_version >= '3.7.0'"}
 
 [tool.poetry.dev-dependencies]
 pre-commit = ">=2.1"
