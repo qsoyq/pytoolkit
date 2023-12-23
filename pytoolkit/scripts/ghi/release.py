@@ -7,6 +7,8 @@ from typing import Optional
 import toml
 import typer
 
+from pytoolkit.scripts import version_callback
+
 cmd = typer.Typer(help='A Wrapper for github cli release command.')
 
 
@@ -29,6 +31,10 @@ def create(
                                               '-p',
                                               '--prerelease ',
                                               help='Mark the release as a prerelease'),
+    _version: Optional[bool] = typer.Option(None,
+                                            "--version",
+                                            "-V",
+                                            callback=version_callback),
     verbose: Optional[bool] = typer.Option(
         None,
         '--verbose',
@@ -99,6 +105,10 @@ def delete(
                                      help='Skip the confirmation prompt'),
     delete_tag: bool = typer.Option(True,
                                     '--delete-tag'),
+    _version: Optional[bool] = typer.Option(None,
+                                            "--version",
+                                            "-V",
+                                            callback=version_callback),
 ):
     """Delete a release."""
     cmd = "gh release delete"
