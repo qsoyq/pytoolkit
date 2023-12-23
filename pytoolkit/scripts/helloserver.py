@@ -12,6 +12,7 @@ from pytoolkit.scripts import version_callback
 
 cmd = typer.Typer()
 app = FastAPI()
+logger = logging.getLogger(__name__)
 
 
 @app.get('/')
@@ -29,10 +30,7 @@ def http(
                              '--port',
                              '-p',
                              envvar='http_port'),
-    debug: bool = typer.Option(False,
-                               '--debug',
-                               envvar='http_debug'),
-    reload: bool = typer.Option(False,
+    reload: bool = typer.Option(True,
                                 '--debug',
                                 envvar='http_reload'),
     log_level: int = typer.Option(logging.DEBUG,
@@ -41,15 +39,13 @@ def http(
     version: Optional[bool] = typer.Option(None,
                                            "--version",
                                            "-V",
-                                           callback=version_callback),
-    name: str = typer.Option("",
-                             '--name'),
+                                           callback=version_callback)
 ):
     """启动 http 服务"""
     logging.basicConfig(level=log_level)
     logging.info(f"http server listening on {host}:{port}")
     module = 'pytoolkit.scripts.helloserver'
-    uvicorn.run(f"{module}:app", host=host, port=port, debug=debug, reload=reload)
+    uvicorn.run(f"{module}:app", host=host, port=port, reload=reload)
 
 
 def main():

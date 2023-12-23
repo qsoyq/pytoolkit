@@ -314,6 +314,17 @@ files = [
 ]
 
 [[package]]
+name = "dataclasses"
+version = "0.8"
+description = "A backport of the dataclasses module for Python 3.6"
+optional = false
+python-versions = ">=3.6, <3.7"
+files = [
+    {file = "dataclasses-0.8-py3-none-any.whl", hash = "sha256:0201d89fa866f68c8ebd9d08ee6ff50c0b255f8ec63a71c16fda7af82bb887bf"},
+    {file = "dataclasses-0.8.tar.gz", hash = "sha256:8479067f342acf957dc82ec415d355ab5edb7e7646b90dc6e2fd1d96ad084c97"},
+]
+
+[[package]]
 name = "decorator"
 version = "5.1.1"
 description = "Decorators for Humans"
@@ -1734,4 +1745,4 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=4.6)", "pytest-black (
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.6.2 <4.0"
-content-hash = "9fd1770504c0963607b791ed8a0bf2f293a8a54c4831d2512f14f21996fe2df0"
+content-hash = "04f9467488d2b2c99d6a7d14e9366af616ec4289dc75f446577755fdb0301750"
