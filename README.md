@@ -23,3 +23,11 @@ pytoolkit = { git = "https://github.com/qsoyq/pytoolkit.git", branch = "develop"
 pytoolkit = { git = "https://github.com/qsoyq/pytoolkit.git", tag = "v0.1.0" }
 pytoolkit = { git = "https://github.com/qsoyq/pytoolkit.git", rev = "eafdb2b" }
 ```
+
+## test
+
+performing multi-version Python testing
+
+```shell
+make tox
+```
