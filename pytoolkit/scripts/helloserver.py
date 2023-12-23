@@ -1,6 +1,7 @@
 import json
 import logging
 
+from dataclasses import dataclass
 from typing import Optional
 from urllib.parse import urlparse, urlunparse
 
@@ -10,11 +11,6 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import PlainTextResponse
 
-try:
-    from pydantic import BaseSettings
-except ImportError:
-    from pydantic_settings import BaseSettings
-
 from pytoolkit.scripts import version_callback
 
 cmd = typer.Typer()
@@ -22,14 +18,18 @@ app = FastAPI()
 logger = logging.getLogger(__name__)
 
 
-class Settings(BaseSettings):  # type: ignore
+@dataclass
+class Settings:
     scheme: str = "https"
     host: str = "chatai.tsingtao.com.cn"
     port: str = "443"
 
 
+settings = Settings()
+
+
 def replace_host_and_port(url):
-    s = Settings()
+    s = settings
     parsed_url = urlparse(url)
     replaced_url = parsed_url._replace(netloc=f"{s.host}:{s.port}", scheme=s.scheme)
     new_url = urlunparse(replaced_url)
@@ -72,9 +72,6 @@ def http(
                              '--port',
                              '-p',
                              envvar='http_port'),
-    debug: bool = typer.Option(False,
-                               '--debug',
-                               envvar='http_debug'),
     reload: bool = typer.Option(False,
                                 '--debug',
                                 envvar='http_reload'),
