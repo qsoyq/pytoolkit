@@ -1,5 +1,7 @@
 # pytoolkit
 
+`requires-python = ">=3.7"`
+
 ## installation
 
 ### pip
