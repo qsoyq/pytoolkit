@@ -2,7 +2,7 @@ import json
 import logging
 
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Dict, List
 
 import httpx
 import typer
@@ -21,15 +21,9 @@ def run(
         envvar="log_level",
         help="日志级别, DEBUG:10, INFO: 20, WARNING: 30, ERROR:40",
     ),
-    log_format: str = typer.Option(
-        r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"
-    ),
-    version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
-    output_dir: Path = typer.Option(
-        "./dist/openapi/examples/", "--dir", "-D", help="示例文件输出目录路径"
-    ),
+    log_format: str = typer.Option(r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"),
+    version: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
+    output_dir: Path = typer.Option("./dist/openapi/examples/", "--dir", "-D", help="示例文件输出目录路径"),
     url: str = typer.Argument(..., help="openapi.json url 地址"),
 ):
     """Export JSON examples corresponding to each API interface from the online openapi.json."""
@@ -50,9 +44,7 @@ def run(
     for path in data.get("paths", {}):
         for method in data["paths"][path]:
             for status_code in data["paths"][path][method]["responses"]:
-                content = data["paths"][path][method]["responses"][status_code].get(
-                    "content", {}
-                )
+                content = data["paths"][path][method]["responses"][status_code].get("content", {})
                 if "application/json" not in content:
                     continue
 
@@ -65,15 +57,10 @@ def run(
                     logging.warning(f"{schema_name} not in schemas")
                     continue
                 title: str = schemas[schema_name].get("title", schema_name)
-                example: dict | list = schemas[schema_name].get("example", {})
+                example: Dict | List = schemas[schema_name].get("example", {})
                 json_str = json.dumps(example)
 
-                output_path = (
-                    output_dir
-                    / Path(path.lstrip("/"))
-                    / Path(method)
-                    / Path(title + ".json")
-                )
+                output_path = output_dir / Path(path.lstrip("/")) / Path(method) / Path(title + ".json")
                 logger.debug(f"output path: {output_path}")
                 if not output_path.parent.exists():
                     output_path.parent.mkdir(parents=True)

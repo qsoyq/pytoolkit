@@ -36,10 +36,6 @@ def add_mermaid_support(func: Callable[..., HTMLResponse]):
 
 
 def patch_fastapi():
-    fastapi.openapi.docs.get_swagger_ui_html = add_mermaid_support(
-        fastapi.openapi.docs.get_swagger_ui_html
-    )
-    fastapi.openapi.docs.get_redoc_html = add_mermaid_support(
-        fastapi.openapi.docs.get_redoc_html
-    )
+    fastapi.openapi.docs.get_swagger_ui_html = add_mermaid_support(fastapi.openapi.docs.get_swagger_ui_html)
+    fastapi.openapi.docs.get_redoc_html = add_mermaid_support(fastapi.openapi.docs.get_redoc_html)
     imp.reload(fastapi.applications)

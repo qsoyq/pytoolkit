@@ -1,5 +1,8 @@
+import logging
 import subprocess
 import sys
+
+logger = logging.getLogger(__name__)
 
 
 def test_scripts_entrypoint():
@@ -20,4 +23,5 @@ def test_scripts_entrypoint():
     for executable in executables:
         p = subprocess.run(f"{executable} --version", shell=True)
         if p.returncode != 0:
+            logging.error(f"stderr: {p.stderr}, stdout: {p.stdout}")
             sys.exit(1)

@@ -14,9 +14,7 @@ def retry(
     exceptions: Union[Type, Tuple[Type]] = BaseException,
 ) -> Callable:
     if func is None:
-        return partial(
-            retry, max_tries=max_tries, wait_secs=wait_secs, exceptions=exceptions
-        )
+        return partial(retry, max_tries=max_tries, wait_secs=wait_secs, exceptions=exceptions)
 
     if inspect.iscoroutinefunction(func):
 

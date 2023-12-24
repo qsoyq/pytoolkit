@@ -8,9 +8,7 @@ import typer
 from pytoolkit.message.snowflake import Snowflake
 from pytoolkit.scripts import version_callback
 
-cmd = typer.Typer(
-    help="A Snowflake is a unique ID for a resource which contains a timestamp."
-)
+cmd = typer.Typer(help="A Snowflake is a unique ID for a resource which contains a timestamp.")
 logger = logging.getLogger()
 
 
@@ -25,12 +23,8 @@ def default(
         envvar="log_level",
         help="日志级别, DEBUG:10, INFO: 20, WARNING: 30, ERROR:40",
     ),
-    log_format: str = typer.Option(
-        r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"
-    ),
-    version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
+    log_format: str = typer.Option(r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"),
+    version: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
 ):
     logging.basicConfig(level=log_level, format=log_format)
     if ctx.invoked_subcommand and ctx.invoked_subcommand != inspect.stack()[0].function:
@@ -55,12 +49,8 @@ def generate(
         envvar="log_level",
         help="日志级别, DEBUG:10, INFO: 20, WARNING: 30, ERROR:40",
     ),
-    log_format: str = typer.Option(
-        r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"
-    ),
-    version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
+    log_format: str = typer.Option(r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"),
+    version: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
 ):
     """Return a new snowflake message ID."""
 
@@ -78,12 +68,8 @@ def split(
         envvar="log_level",
         help="日志级别, DEBUG:10, INFO: 20, WARNING: 30, ERROR:40",
     ),
-    log_format: str = typer.Option(
-        r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"
-    ),
-    version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
+    log_format: str = typer.Option(r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"),
+    version: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
 ):
     """Parse snowflake message ID into (timestamp, workid, sequence)."""
     logging.basicConfig(level=log_level, format=log_format)

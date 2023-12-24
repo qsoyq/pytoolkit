@@ -1,3 +1,6 @@
+[project]
+requires-python = ">=3.7"
+
 [tool.poetry]
 name = "pytoolkit"
 version = "0.1.2"
@@ -84,6 +87,7 @@ deps =
     pytest
 
 commands =
+
     python -m poetry install
     python -m pip install pytest
     python -m pytest tests
@@ -156,11 +160,8 @@ exclude = [
 ]
 
 # Same as Black.
-line-length = 88
+line-length = 119
 indent-width = 4
-
-# Assume Python 3.8
-target-version = "py310"
 
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
@@ -194,7 +195,7 @@ line-ending = "auto"
 #
 # This is currently disabled by default, but it is planned for this
 # to be opt-out in the future.
-# docstring-code-format = true
+docstring-code-format = true
 
 # Set the line length limit used when formatting code snippets in
 # docstrings.

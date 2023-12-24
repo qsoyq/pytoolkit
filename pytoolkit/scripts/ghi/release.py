@@ -16,16 +16,10 @@ cmd = typer.Typer(help="A Wrapper for github cli release command.")
 def create(
     tag: Optional[str] = typer.Option(None, "--tag"),
     title: str = typer.Option("", "-t", "--title", help="Release title"),
-    target: str = typer.Option(
-        "", "--target", help="Target branch or full commit SHA (default: main branch)"
-    ),
+    target: str = typer.Option("", "--target", help="Target branch or full commit SHA (default: main branch)"),
     notes: str = typer.Option("", "--notes", "-n", help="Release notes"),
-    prerelease: Optional[bool] = typer.Option(
-        None, "-p", "--prerelease ", help="Mark the release as a prerelease"
-    ),
-    _version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
+    prerelease: Optional[bool] = typer.Option(None, "-p", "--prerelease ", help="Mark the release as a prerelease"),
+    _version: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
     verbose: Optional[bool] = typer.Option(
         None,
         "--verbose",
@@ -89,13 +83,9 @@ def delete(
         None,
         "--verbose",
     ),
-    skip_prompt: bool = typer.Option(
-        True, "-y", "--yes", help="Skip the confirmation prompt"
-    ),
+    skip_prompt: bool = typer.Option(True, "-y", "--yes", help="Skip the confirmation prompt"),
     delete_tag: bool = typer.Option(True, "--delete-tag"),
-    _version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
+    _version: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
 ):
     """Delete a release."""
     cmd = "gh release delete"

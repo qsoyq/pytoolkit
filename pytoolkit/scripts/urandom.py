@@ -21,12 +21,8 @@ def run(
         envvar="log_level",
         help="日志级别, DEBUG:10, INFO: 20, WARNING: 30, ERROR:40",
     ),
-    log_format: str = typer.Option(
-        r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"
-    ),
-    version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
+    log_format: str = typer.Option(r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"),
+    version: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
 ):
     """Return a bytestring of size random bytes suitable for cryptographic use."""
     logging.basicConfig(level=log_level, format=log_format)

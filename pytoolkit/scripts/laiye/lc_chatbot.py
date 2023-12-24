@@ -30,9 +30,7 @@ def get_headers(pubkey: str, secret: str) -> Mapping[str, str]:
 
 @cmd.command()
 def bot_response(
-    version_callback: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
+    version_callback: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
     debug: bool = typer.Option(False),
     scheme: str = typer.Option("https"),
     endpoint: str = typer.Option("demo.laiye.com:8083"),

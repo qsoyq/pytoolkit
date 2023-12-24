@@ -9,11 +9,7 @@ from rich.text import Text
 
 
 def new_text(selected: int, choices: List) -> Text:
-    return Text(
-        "\n".join(
-            [f"{'>' if i == selected else ' '} {x}" for i, x in enumerate(choices)]
-        )
-    )
+    return Text("\n".join([f"{'>' if i == selected else ' '} {x}" for i, x in enumerate(choices)]))
 
 
 def select_prompt(choices: List):

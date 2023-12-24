@@ -75,9 +75,7 @@ def http(
     port: int = typer.Option(8000, "--port", "-p", envvar="http_port"),
     reload: bool = typer.Option(False, "--debug", envvar="http_reload"),
     log_level: int = typer.Option(logging.DEBUG, "--log_level", envvar="log_level"),
-    version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
+    version: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
 ):
     """启动 http 服务"""
     logging.basicConfig(level=log_level)
