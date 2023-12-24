@@ -1,4 +1,4 @@
-.PHONY: default format mypy build push test precommit export tox tox362
+.PHONY: default format mypy precommit export tox tox362
 
 
 
@@ -7,12 +7,11 @@ default: format
 export:
 	@poetry export -o requirements.txt --all-extras --with-credentials
 
-format: refactor precommit
+format: precommit
 
 refactor:
-	@yapf -r -i . 
-	@isort . 
-	@pycln -a .
+	@ruff check . --fix
+	@ruff format .
 
 precommit:
 	@pre-commit install

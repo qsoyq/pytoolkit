@@ -3,7 +3,6 @@ from collections.abc import MutableMapping
 
 
 class _MutableMapping(MutableMapping):
-
     def __init__(self, *args, **kwargs):
         self._store = dict()
         self.update(*args, **kwargs)
@@ -25,10 +24,9 @@ class _MutableMapping(MutableMapping):
 
 
 class LRUCacheOrderedDict(_MutableMapping):
-
     def __init__(self, maxsize: int = 4096, *args, **kwargs):
         if maxsize <= 0:
-            raise ValueError('maxsize must be grater equal than 1.')
+            raise ValueError("maxsize must be grater equal than 1.")
 
         self._maxsize = maxsize
         self._store = OrderedDict()

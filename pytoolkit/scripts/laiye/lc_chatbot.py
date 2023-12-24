@@ -30,36 +30,32 @@ def get_headers(pubkey: str, secret: str) -> Mapping[str, str]:
 
 @cmd.command()
 def bot_response(
-    version_callback: Optional[bool] = typer.Option(None,
-                                                    "--version",
-                                                    "-V",
-                                                    callback=version_callback),
+    version_callback: Optional[bool] = typer.Option(
+        None, "--version", "-V", callback=version_callback
+    ),
     debug: bool = typer.Option(False),
     scheme: str = typer.Option("https"),
     endpoint: str = typer.Option("demo.laiye.com:8083"),
     _type: str = typer.Option("channels"),
     action: str = typer.Option("getReply"),
-    version: str = typer.Option("v1alpha1",
-                                "--api-version",
-                                help='API 版本号'),
-    username: str = typer.Option("pytoolkit",
-                                 prompt=True,
-                                 help='用户ID'),
-    content: str = typer.Option(...,
-                                prompt=True,
-                                help='用户输入问题'),
-    agentId: str = typer.Option(...,
-                                prompt=True),
-    pubkey: str = typer.Option(...,
-                               prompt=True),
-    secret: str = typer.Option(...,
-                               prompt=True),
-    channelId: str = typer.Option(...,
-                                  prompt=True),
+    version: str = typer.Option("v1alpha1", "--api-version", help="API 版本号"),
+    username: str = typer.Option("pytoolkit", prompt=True, help="用户ID"),
+    content: str = typer.Option(..., prompt=True, help="用户输入问题"),
+    agentId: str = typer.Option(..., prompt=True),
+    pubkey: str = typer.Option(..., prompt=True),
+    secret: str = typer.Option(..., prompt=True),
+    channelId: str = typer.Option(..., prompt=True),
 ):
-    url = f'{scheme}://{endpoint}/chatbot/{version}/agents/{agentId}/{_type}/{channelId}/{action}'
+    url = f"{scheme}://{endpoint}/chatbot/{version}/agents/{agentId}/{_type}/{channelId}/{action}"
     headers = get_headers(pubkey, secret)
-    body = {"username": username, "query": {"text": {"content": content, }}}
+    body = {
+        "username": username,
+        "query": {
+            "text": {
+                "content": content,
+            }
+        },
+    }
 
     resp = httpx.post(url, json=body, headers=dict(headers))
     if debug:
@@ -69,18 +65,18 @@ def bot_response(
         typer.echo(f"调用失败, 原因: {resp.text}")
         typer.Exit(-1)
 
-    for res in resp.json()['responses']:
-        if 'text' in res['msgBody']:
-            val = res['msgBody']['text']["content"]
-            print(f'text: {val}')
-        elif 'image' in res['msgBody']:
-            val = res['msgBody']['image']["resourceUrl"]
-            print(f'image: {val}')
+    for res in resp.json()["responses"]:
+        if "text" in res["msgBody"]:
+            val = res["msgBody"]["text"]["content"]
+            print(f"text: {val}")
+        elif "image" in res["msgBody"]:
+            val = res["msgBody"]["image"]["resourceUrl"]
+            print(f"image: {val}")
 
 
 def main():
     cmd()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

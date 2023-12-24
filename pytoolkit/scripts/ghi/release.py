@@ -9,35 +9,26 @@ import typer
 
 from pytoolkit.scripts import version_callback
 
-cmd = typer.Typer(help='A Wrapper for github cli release command.')
+cmd = typer.Typer(help="A Wrapper for github cli release command.")
 
 
 @cmd.command()
 def create(
-    tag: Optional[str] = typer.Option(None,
-                                      '--tag'),
-    title: str = typer.Option("",
-                              '-t',
-                              '--title',
-                              help='Release title'),
-    target: str = typer.Option('',
-                               '--target',
-                               help='Target branch or full commit SHA (default: main branch)'),
-    notes: str = typer.Option("",
-                              "--notes",
-                              '-n',
-                              help='Release notes'),
-    prerelease: Optional[bool] = typer.Option(None,
-                                              '-p',
-                                              '--prerelease ',
-                                              help='Mark the release as a prerelease'),
-    _version: Optional[bool] = typer.Option(None,
-                                            "--version",
-                                            "-V",
-                                            callback=version_callback),
+    tag: Optional[str] = typer.Option(None, "--tag"),
+    title: str = typer.Option("", "-t", "--title", help="Release title"),
+    target: str = typer.Option(
+        "", "--target", help="Target branch or full commit SHA (default: main branch)"
+    ),
+    notes: str = typer.Option("", "--notes", "-n", help="Release notes"),
+    prerelease: Optional[bool] = typer.Option(
+        None, "-p", "--prerelease ", help="Mark the release as a prerelease"
+    ),
+    _version: Optional[bool] = typer.Option(
+        None, "--version", "-V", callback=version_callback
+    ),
     verbose: Optional[bool] = typer.Option(
         None,
-        '--verbose',
+        "--verbose",
     ),
 ):
     """Create a new GitHub Release for a repository."""
@@ -46,7 +37,7 @@ def create(
     if notes:
         cmd += f" --notes {notes}"
     else:
-        cmd += ' --generate-notes'
+        cmd += " --generate-notes"
 
     if prerelease:
         cmd += " --prerelease"
@@ -73,10 +64,10 @@ def create(
         if not isinstance(version, str):
             raise typer.Exit(1)
 
-        if version.startswith('v'):
+        if version.startswith("v"):
             tag = version
         else:
-            tag = f'v{version}'
+            tag = f"v{version}"
 
     cmd += f" {tag}"
     args = shlex.split(cmd)
@@ -93,22 +84,18 @@ def create(
 
 @cmd.command()
 def delete(
-    tag: Optional[str] = typer.Option(None,
-                                      '--tag'),
+    tag: Optional[str] = typer.Option(None, "--tag"),
     verbose: Optional[bool] = typer.Option(
         None,
-        '--verbose',
+        "--verbose",
     ),
-    skip_prompt: bool = typer.Option(True,
-                                     '-y',
-                                     '--yes',
-                                     help='Skip the confirmation prompt'),
-    delete_tag: bool = typer.Option(True,
-                                    '--delete-tag'),
-    _version: Optional[bool] = typer.Option(None,
-                                            "--version",
-                                            "-V",
-                                            callback=version_callback),
+    skip_prompt: bool = typer.Option(
+        True, "-y", "--yes", help="Skip the confirmation prompt"
+    ),
+    delete_tag: bool = typer.Option(True, "--delete-tag"),
+    _version: Optional[bool] = typer.Option(
+        None, "--version", "-V", callback=version_callback
+    ),
 ):
     """Delete a release."""
     cmd = "gh release delete"
@@ -128,13 +115,13 @@ def delete(
         if not isinstance(version, str):
             raise typer.Exit(1)
 
-        if version.startswith('v'):
+        if version.startswith("v"):
             tag = version
         else:
-            tag = f'v{version}'
+            tag = f"v{version}"
 
     if skip_prompt:
-        cmd += ' -y'
+        cmd += " -y"
 
     cmd += f" {tag}"
     args = shlex.split(cmd)
@@ -150,10 +137,10 @@ def delete(
     if not delete_tag:
         return
 
-    cmd = f'git tag -d {tag}'
+    cmd = f"git tag -d {tag}"
     p = subprocess.run(shlex.split(cmd), capture_output=True, text=True)
 
-    cmd = f'git push origin :refs/tags/{tag}'
+    cmd = f"git push origin :refs/tags/{tag}"
     p = subprocess.run(shlex.split(cmd), capture_output=True, text=True)
     if p.returncode != 0:
         typer.echo(p.stderr, err=True, color=True)
@@ -164,5 +151,5 @@ def main():
     cmd()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

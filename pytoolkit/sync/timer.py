@@ -2,7 +2,6 @@ from threading import Timer
 
 
 class LoopTimer(Timer):
-
     def run(self):
         while True:
             self.finished.wait(self.interval)

@@ -21,6 +21,6 @@ def index():
     return "success"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     patch_fastapi()
     uvicorn.run("main:app")

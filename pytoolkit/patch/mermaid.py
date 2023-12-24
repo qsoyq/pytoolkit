@@ -14,14 +14,14 @@ def add_mermaid_support(func: Callable[..., HTMLResponse]):
 
     https://mermaid-js.github.io/mermaid/#/n00b-gettingStarted?id=requirements-for-the-mermaid-api
     """
-    mermaid_js = '''
+    mermaid_js = """
 
     <script type="module">
       import mermaid from 'https://unpkg.com/mermaid@9/dist/mermaid.esm.min.mjs';
       mermaid.initialize({ startOnLoad: true });
     </script>
 
-    '''
+    """
 
     @wraps(func)
     def decorator(*args, **kwargs) -> HTMLResponse:
@@ -36,6 +36,10 @@ def add_mermaid_support(func: Callable[..., HTMLResponse]):
 
 
 def patch_fastapi():
-    fastapi.openapi.docs.get_swagger_ui_html = add_mermaid_support(fastapi.openapi.docs.get_swagger_ui_html)
-    fastapi.openapi.docs.get_redoc_html = add_mermaid_support(fastapi.openapi.docs.get_redoc_html)
+    fastapi.openapi.docs.get_swagger_ui_html = add_mermaid_support(
+        fastapi.openapi.docs.get_swagger_ui_html
+    )
+    fastapi.openapi.docs.get_redoc_html = add_mermaid_support(
+        fastapi.openapi.docs.get_redoc_html
+    )
     imp.reload(fastapi.applications)

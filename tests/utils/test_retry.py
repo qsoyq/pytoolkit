@@ -4,7 +4,6 @@ from pytoolkit.utils.retry import retry
 
 
 def test_retry():
-
     def add_one():
         nonlocal num
         num += 1
@@ -25,7 +24,6 @@ def test_retry():
 
 
 def test_retry_with_max_tries():
-
     def add_one():
         nonlocal num
         num += 1
@@ -47,7 +45,6 @@ def test_retry_with_max_tries():
 
 
 def test_retry_with_exceptions():
-
     exceptions = (TypeError, IndexError)
 
     def add_one():

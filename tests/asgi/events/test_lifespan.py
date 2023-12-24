@@ -14,14 +14,14 @@ async def test_httpx_asgi_transport():
 
     n = 0
 
-    @app.get('/')
+    @app.get("/")
     def _():
         nonlocal n
         n += 1
         return {}
 
     client = httpx.AsyncClient(app=app)
-    url = 'http://address/'
+    url = "http://address/"
 
     assert n == 0
     await client.get(url)
