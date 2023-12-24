@@ -22,21 +22,21 @@ def select_prompt(choices: List):
         if char is None:
             return new_text(selected, choices)
 
-        if input_flag == 0 and char == '\x1b':
+        if input_flag == 0 and char == "\x1b":
             input_flag = 1
 
-        elif input_flag == 1 and char == '[':
+        elif input_flag == 1 and char == "[":
             input_flag = 2
 
         elif input_flag == 2:
-            char = '^' + char
+            char = "^" + char
             input_flag = 0
 
-        if char == '\n':
+        if char == "\n":
             return None
-        elif char == '^A':
+        elif char == "^A":
             selected -= 1
-        elif char == '^B':
+        elif char == "^B":
             selected += 1
 
         selected = selected % len(choices)

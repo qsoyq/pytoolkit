@@ -9,11 +9,13 @@ logger = logging.getLogger()
 
 
 class LifespanEvent:
-    """通过 Lifespan 管理 ASGIApplication 的启动和退出事件
-    """
+    """通过 Lifespan 管理 ASGIApplication 的启动和退出事件"""
 
-    def __init__(self, app: ASGIAppProtocol, loop: Optional[asyncio.events.AbstractEventLoop] = None):
-
+    def __init__(
+        self,
+        app: ASGIAppProtocol,
+        loop: Optional[asyncio.events.AbstractEventLoop] = None,
+    ):
         self.app = app
         self.loop = loop if loop is not None else asyncio.get_event_loop()
         self.receive_queue: asyncio.Queue[MessageType] = asyncio.Queue()
@@ -34,26 +36,26 @@ class LifespanEvent:
 
     async def send(self, message: MessageType):
         body = message.get("message")
-        assert message['type'] in (
+        assert message["type"] in (
             "lifespan.startup.complete",
             "lifespan.startup.failed",
             "lifespan.shutdown.complete",
             "lifespan.shutdown.failed",
         )
         startup_events = (LifespanType.startup_complete, LifespanType.startup_failed)
-        if message['type'] in startup_events:
+        if message["type"] in startup_events:
             assert not self.startup_event.is_set() and not self.shutdown_event.is_set()
             self.startup_event.set()
 
-            if message['type'] == LifespanType.startup_failed:
+            if message["type"] == LifespanType.startup_failed:
                 logger.debug(f"startup_failed: {body}")
 
         shutdown_events = (LifespanType.shutdown_complete, LifespanType.shutdown_failed)
-        if message['type'] in shutdown_events:
+        if message["type"] in shutdown_events:
             assert self.startup_event.is_set() and not self.shutdown_event.is_set()
             self.shutdown_event.set()
 
-            if message['type'] == LifespanType.shutdown_failed:
+            if message["type"] == LifespanType.shutdown_failed:
                 logger.debug(f"shutdown_failed: {body}")
 
     async def startup(self):
@@ -75,9 +77,6 @@ class LifespanEvent:
     async def main(self):
         scope = {
             "type": LifespanType.main,
-            "asgi": {
-                "version": "asgi3",
-                "spec_version": "2.0"
-            },
+            "asgi": {"version": "asgi3", "spec_version": "2.0"},
         }
         await self.app(scope, self.receive, self.send)

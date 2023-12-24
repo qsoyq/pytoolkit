@@ -1,7 +1,7 @@
 import json
 import logging
 
-from typing import Optional
+from typing import Optional, List, Dict, Any
 
 import httpx
 import typer
@@ -16,45 +16,34 @@ logger = logging.getLogger(__name__)
 def run(
     log_level: int = typer.Option(
         logging.INFO,
-        '--log_level',
-        envvar='log_level',
-        help='日志级别, DEBUG:10, INFO: 20, WARNING: 30, ERROR:40'
+        "--log_level",
+        envvar="log_level",
+        help="日志级别, DEBUG:10, INFO: 20, WARNING: 30, ERROR:40",
     ),
-    log_format: str = typer.Option(r'%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s'),
-    version: Optional[bool] = typer.Option(None,
-                                           "--version",
-                                           "-V",
-                                           callback=version_callback),
-    openapi_title: Optional[str] = typer.Option('OpenAPI',
-                                                '--title',
-                                                '-t',
-                                                envvar="openapi_title"),
-    openapi_verison: Optional[str] = typer.Option('3.1.0',
-                                                  '--openapi-verison',
-                                                  envvar="openapi_verison"),
+    log_format: str = typer.Option(r"%(asctime)s %(levelname)s %(filename)s %(lineno)s %(message)s"),
+    version: Optional[bool] = typer.Option(None, "--version", "-V", callback=version_callback),
+    openapi_title: Optional[str] = typer.Option("OpenAPI", "--title", "-t", envvar="openapi_title"),
+    openapi_verison: Optional[str] = typer.Option("3.1.0", "--openapi-verison", envvar="openapi_verison"),
     openapi_info_verison: Optional[str] = typer.Option(
-        '1.0.0',
-        '--openapi-info-verison',
-        envvar="openapi_info_verison"
+        "1.0.0", "--openapi-info-verison", envvar="openapi_info_verison"
     ),
-    urls: list[str] = typer.Argument(...,
-                                     help="openapi.json url 地址")
+    urls: List[str] = typer.Argument(..., help="openapi.json url 地址"),
 ):
     """Merge multiple OpenAPI description files into one."""
     logging.basicConfig(level=log_level, format=log_format)
     fastapi_default_schemas = ["HTTPValidationError", "ValidationError"]
-    paths = {}
-    schemas = {}
+    paths: Dict[Any, Any] = {}
+    schemas: Dict[Any, Any] = {}
     openapi_schema = {
         "openapi": openapi_verison,
-        'info': {
+        "info": {
             "title": openapi_title,
             "version": openapi_info_verison,
         },
         "paths": paths,
         "components": {
             "schemas": schemas,
-        }
+        },
     }
     for url in urls:
         res = httpx.get(url)
@@ -83,5 +72,5 @@ def main():
     cmd()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -10,7 +10,7 @@ def test_loop_timer():
         nonlocal n
         n += 1
 
-    t = LoopTimer(.5, worker)
+    t = LoopTimer(0.5, worker)
     t.start()
     time.sleep(2.1)
     t.cancel()

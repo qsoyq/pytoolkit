@@ -6,13 +6,11 @@ from pytoolkit.utils.singleton import SingletonMetaClass, singleton
 
 @singleton
 class _Class:
-
     def __init__(self):
         self.val = uuid.uuid4().hex
 
 
 class __Class(metaclass=SingletonMetaClass):
-
     def __init__(self):
         self.val = uuid.uuid4().hex
 

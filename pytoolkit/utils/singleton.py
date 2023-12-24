@@ -13,7 +13,7 @@ def singleton(cls: Type) -> Type:
         if instance is None:
             instance = _new(_cls, *args, **kwargs)
         else:
-            setattr(instance.__class__, '__init__', _init)
+            setattr(instance.__class__, "__init__", _init)
         return instance
 
     cls.__new__ = get_instance  # type: ignore
@@ -21,7 +21,6 @@ def singleton(cls: Type) -> Type:
 
 
 class SingletonMetaClass(type):
-
     def __init__(cls, *args, **kwargs):
         cls.__instance = None
         super().__init__(*args, **kwargs)

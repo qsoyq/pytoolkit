@@ -10,9 +10,9 @@ from pytoolkit.sync.once import once
 
 def test():
     with pytest.raises(TypeError) as exc_info:
-        once(1)  #type: ignore
+        once(1)  # type: ignore
 
-    assert str(exc_info.value) == 'func must be callable'
+    assert str(exc_info.value) == "func must be callable"
 
     n = 0
 

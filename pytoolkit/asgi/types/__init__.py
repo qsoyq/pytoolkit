@@ -9,8 +9,7 @@ SendType = typing.Callable[[MessageType], typing.Awaitable[None]]
 
 
 class ASGIAppProtocol(typing_extensions.Protocol):
-
-    #　https://asgi.readthedocs.io/en/latest/specs/lifespan.html
+    # https://asgi.readthedocs.io/en/latest/specs/lifespan.html
     async def __call__(self, scope: ScopeType, receive: ReceiveType, send: SendType):
         pass
 

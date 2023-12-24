@@ -48,8 +48,12 @@ class Snowflake:
                 self.__class__.TIMESTAMP = now
 
             else:
-                raise ValueError('时间戳错误')
-            return self.__class__.TIMESTAMP << TIMESTAMP_LEFT_MOVE | self._workid << WORKID_LEFT_MOVE | self.__class__.SEQUENCE
+                raise ValueError("时间戳错误")
+            return (
+                self.__class__.TIMESTAMP << TIMESTAMP_LEFT_MOVE
+                | self._workid << WORKID_LEFT_MOVE
+                | self.__class__.SEQUENCE
+            )
 
     def split(self, uid: int) -> Tuple[int, int, int]:
         timestamp = uid >> TIMESTAMP_LEFT_MOVE

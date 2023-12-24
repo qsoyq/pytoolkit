@@ -11,8 +11,7 @@ def retry(
     *,
     max_tries: int = 2,
     wait_secs: float = 1,
-    exceptions: Union[Type,
-                      Tuple[Type]] = BaseException
+    exceptions: Union[Type, Tuple[Type]] = BaseException,
 ) -> Callable:
     if func is None:
         return partial(retry, max_tries=max_tries, wait_secs=wait_secs, exceptions=exceptions)
